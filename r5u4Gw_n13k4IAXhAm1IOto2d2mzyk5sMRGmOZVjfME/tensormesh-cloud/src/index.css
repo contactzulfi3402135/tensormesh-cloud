@@ -1,0 +1,299 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   TENSOR MESH — Design System
+   Technical precision. 1px hairlines. Tabular telemetry. No decorative blur.
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --canvas: #0a0b0e;
+    --surface: #111318;
+    --elevated: #181b22;
+    --hairline: #1f242f;
+    --amber: #f59e0b;
+    --rail: #06b6d4;
+    --signal: #f8fafc;
+    --muted: #8b949e;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 128px;
+    background-color: var(--canvas);
+  }
+
+  body {
+    @apply bg-obsidian text-signal font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01', 'kern' 1;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(245, 158, 11, 0.28);
+    color: #f8fafc;
+  }
+
+  /* Precision scrollbars — thin, hairline-thumbed */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0b0e;
+    border-left: 1px solid #1f242f;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262c38;
+    border: 2px solid #0a0b0e;
+    border-radius: 0;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #38414f;
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  /* Native control restyling for the region selector + configurator dropdowns */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select option {
+    background-color: #111318;
+    color: #f8fafc;
+  }
+
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+  }
+
+  /* Micro-label: uppercase mono eyebrow used across every module header */
+  .eyebrow {
+    @apply font-mono text-2xs uppercase tracking-widest3 text-slate-tech;
+  }
+
+  .eyebrow-amber {
+    @apply font-mono text-2xs uppercase tracking-widest3 text-amber;
+  }
+
+  /* Surface primitives */
+  .panel {
+    @apply border border-hairline bg-carbon;
+  }
+
+  .panel-elevated {
+    @apply border border-hairline bg-graphite;
+  }
+
+  .hairline-t {
+    @apply border-t border-hairline;
+  }
+  .hairline-b {
+    @apply border-b border-hairline;
+  }
+  .hairline-l {
+    @apply border-l border-hairline;
+  }
+  .hairline-r {
+    @apply border-r border-hairline;
+  }
+
+  /* Corner ticks — machined-bracket detail on key surfaces */
+  .corner-ticks {
+    position: relative;
+  }
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: '';
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .corner-ticks::before {
+    top: -1px;
+    left: -1px;
+    border-top: 1px solid var(--amber);
+    border-left: 1px solid var(--amber);
+  }
+  .corner-ticks::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 1px solid var(--amber);
+    border-right: 1px solid var(--amber);
+  }
+
+  /* Data badges */
+  .badge {
+    @apply inline-flex items-center gap-1.5 border border-hairline bg-badgefill px-2 py-[3px] font-mono text-2xs uppercase tracking-widest text-amber;
+  }
+  .badge-good {
+    @apply text-good;
+  }
+  .badge-rail {
+    @apply text-rail;
+  }
+  .badge-muted {
+    @apply text-slate-tech;
+  }
+  .badge-crit {
+    @apply text-crit;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 border px-4 py-2.5 font-mono text-2sm uppercase tracking-widest transition-all duration-200 ease-precision disabled:cursor-not-allowed disabled:opacity-45;
+  }
+
+  .btn-primary {
+    @apply border-amber bg-amber text-obsidian hover:-translate-y-[2px] hover:bg-amber-bright hover:shadow-lift active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply border-hairline bg-carbon text-signal hover:border-slate-faint hover:bg-graphite hover:text-amber;
+  }
+
+  .btn-rail {
+    @apply border-rail/40 bg-rail/5 text-rail hover:-translate-y-[2px] hover:border-rail hover:bg-rail/10 hover:shadow-lift-cyan;
+  }
+
+  /* Form controls */
+  .field {
+    @apply w-full border border-hairline bg-obsidian px-3.5 py-3 font-mono text-[13px] text-signal placeholder:text-slate-faint transition-colors duration-150 focus:border-amber focus:outline-none;
+  }
+
+  .field-label {
+    @apply mb-2 block font-mono text-2xs uppercase tracking-widest text-slate-tech;
+  }
+
+  .radio-card {
+    @apply cursor-pointer border px-3.5 py-3 transition-all duration-200 ease-precision;
+  }
+  .radio-card-on {
+    @apply border-amber bg-amber/5;
+  }
+  .radio-card-off {
+    @apply border-hairline bg-obsidian hover:border-slate-faint hover:bg-graphite;
+  }
+
+  /* Precision range slider — machined thumb, hairline rail */
+  .range-precision {
+    @apply h-1.5 w-full cursor-pointer appearance-none bg-graphite;
+  }
+  .range-precision::-webkit-slider-runnable-track {
+    height: 6px;
+    background: #181b22;
+    border: 1px solid #1f242f;
+  }
+  .range-precision::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -7px;
+    height: 20px;
+    width: 10px;
+    border: 1px solid #f59e0b;
+    background: #f59e0b;
+    border-radius: 0;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16);
+    transition: background 150ms ease;
+  }
+  .range-precision:hover::-webkit-slider-thumb {
+    background: #fbbf24;
+  }
+  .range-precision::-moz-range-track {
+    height: 6px;
+    background: #181b22;
+    border: 1px solid #1f242f;
+  }
+  .range-precision::-moz-range-thumb {
+    height: 18px;
+    width: 10px;
+    border: 1px solid #f59e0b;
+    background: #f59e0b;
+    border-radius: 0;
+  }
+
+  /* Telemetry numerals */
+  .num {
+    @apply font-mono tabular-nums;
+  }
+
+  /* Marquee ticker mask */
+  .ticker-mask {
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Diagonal hatch used on "inactive / reserved capacity" surfaces */
+  .hatch {
+    background-image: repeating-linear-gradient(
+      45deg,
+      rgba(139, 148, 158, 0.13) 0px,
+      rgba(139, 148, 158, 0.13) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  }
+
+  .glow-amber {
+    box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.35), 0 0 28px -6px rgba(245, 158, 11, 0.5);
+  }
+
+  .glow-rail {
+    box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.35), 0 0 28px -6px rgba(6, 182, 212, 0.5);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Reduced motion: strip decorative animation, keep state changes legible */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
